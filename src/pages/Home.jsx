@@ -4,7 +4,6 @@ import ProductCard from '../components/Catalog/ProductCard';
 import Filters from '../components/Catalog/Filters';
 import SearchBar from '../components/Catalog/SearchBar';
 import { products } from '../data/products';
-import './Home.css';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -63,18 +62,18 @@ const Home = () => {
     }, [searchTerm, filters, sortOrder]);
 
     return (
-        <div className="container home-page">
-            <div className="catalog-layout">
-                <div className="catalog-sidebar">
+        <div className="container mx-auto px-4 py-8 pb-16">
+            <div className="grid grid-cols-1 md:grid-cols-[250px_1fr] gap-8">
+                <div className="mb-6 md:mb-0">
                     <Filters filters={filters} setFilters={setFilters} />
                 </div>
 
-                <div className="catalog-content">
-                    <div className="catalog-header">
-                        <h1>Каталог грузовых шин</h1>
-                        <div className="catalog-controls">
+                <div className="flex flex-col">
+                    <div className="flex flex-wrap justify-between items-center mb-4 gap-4">
+                        <h1 className="text-2xl font-bold text-primary">Каталог грузовых шин</h1>
+                        <div className="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
                             <select
-                                className="sort-select"
+                                className="p-2 border border-border rounded-md text-sm outline-none cursor-pointer"
                                 value={sortOrder}
                                 onChange={(e) => setSortOrder(e.target.value)}
                             >
@@ -83,23 +82,23 @@ const Home = () => {
                                 <option value="price-desc">Сначала дороже</option>
                                 <option value="name-asc">По названию (А-Я)</option>
                             </select>
-                            <span className="product-count">Найдено: {filteredProducts.length}</span>
+                            <span className="text-text-muted font-medium">Найдено: {filteredProducts.length}</span>
                         </div>
                     </div>
 
                     <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
                     {filteredProducts.length > 0 ? (
-                        <div className="product-grid">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                             {filteredProducts.map(product => (
-                                <div key={product.id} onClick={() => navigate(`/product/${product.id}`)} style={{ cursor: 'pointer' }}>
+                                <div key={product.id} onClick={() => navigate(`/product/${product.id}`)} className="cursor-pointer">
                                     <ProductCard product={product} />
                                 </div>
                             ))}
                         </div>
                     ) : (
-                        <div className="no-results">
-                            <p>По вашему запросу ничего не найдено.</p>
+                        <div className="text-center p-12 bg-white rounded-lg border border-dashed border-border">
+                            <p className="mb-4 text-text-muted text-lg">По вашему запросу ничего не найдено.</p>
                             <button
                                 className="btn btn-outline"
                                 onClick={() => {
